@@ -115,6 +115,38 @@
         .delete-btn:hover {
             color: #483d8b; /* Darker purple */
         }
+
+        /* Adding more styles to improve layout */
+        .info-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .summary-box {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 48%;
+        }
+
+        .summary-box h3 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .summary-box p {
+            font-size: 1.2em;
+            margin: 5px 0;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -152,6 +184,22 @@
         <input type="number" id="expense-amount" placeholder="Amount">
         <button class="add-btn" onclick="addExpense()">Add Expense</button>
 
+        <!-- Adding new container for displaying financial summary -->
+        <div class="info-container">
+            <div class="summary-box">
+                <h3>Total Income</h3>
+                <p id="total-income">0.00</p>
+            </div>
+            <div class="summary-box">
+                <h3>Total Expenses</h3>
+                <p id="total-expenses">0.00</p>
+            </div>
+            <div class="summary-box">
+                <h3>Net Savings</h3>
+                <p id="net-savings">0.00</p>
+            </div>
+        </div>
+
         <div class="charts">
             <h2>Graphical Analysis</h2>
             <div class="options-container">
@@ -188,8 +236,11 @@
                 updateTable('income-table', incomes, true);
                 updateCharts();
                 updateSavingsChart();
+                updateFinancialSummary();
                 document.getElementById('income-item').value = '';
                 document.getElementById('income-amount').value = '';
+            } else {
+                showError("Please enter a valid income item and amount.");
             }
         }
 
@@ -202,8 +253,11 @@
                 updateTable('expense-table', expenses, false);
                 updateCharts();
                 updateSavingsChart();
+                updateFinancialSummary();
                 document.getElementById('expense-item').value = '';
                 document.getElementById('expense-amount').value = '';
+            } else {
+                showError("Please enter a valid expense item and amount.");
             }
         }
 
@@ -229,6 +283,7 @@
             updateTable(isIncome ? 'income-table' : 'expense-table', isIncome ? incomes : expenses, isIncome);
             updateCharts();
             updateSavingsChart();
+            updateFinancialSummary();
         }
 
         function updateCharts() {
@@ -296,6 +351,26 @@
                     responsive: true,
                 },
             });
+        }
+
+        function updateFinancialSummary() {
+            const totalIncome = incomes.reduce((sum, income) => sum + income.amount, 0);
+            const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+            const netSavings = totalIncome - totalExpenses;
+
+            document.getElementById('total-income').textContent = totalIncome.toFixed(2);
+            document.getElementById('total-expenses').textContent = totalExpenses.toFixed(2);
+            document.getElementById('net-savings').textContent = netSavings.toFixed(2);
+        }
+
+        function showError(message) {
+            const errorDiv = document.querySelector('.error-message');
+            if (!errorDiv) {
+                const errorMessageDiv = document.createElement('div');
+                errorMessageDiv.classList.add('error-message');
+                errorMessageDiv.textContent = message;
+                document.body.appendChild(errorMessageDiv);
+            }
         }
     </script>
 </body>
