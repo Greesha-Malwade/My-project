@@ -10,13 +10,15 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #b3cde0, #d3c6e7, #a3d5d3); /* Smooth gradient inspired by the uploaded image */
+            background: linear-gradient(to bottom, #b3cde0, #d3c6e7, #a3d5d3); 
+            /* Smooth gradient inspired by the uploaded image */
         }
 
         header {
             text-align: center;
             padding: 20px;
-            background: linear-gradient(to right, #afc7f2, #d0a1f4); /* Gradient with purple and blue tones */
+            background: linear-gradient(to right, #afc7f2, #d0a1f4);
+            /* Gradient with purple and blue tones */
             color: white;
             font-size: 2em;
             font-weight: bold;
@@ -27,7 +29,8 @@
             max-width: 900px;
             margin: 20px auto;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            background: rgba(255, 255, 255, 0.9);
+            /* Slightly transparent white */
             border-radius: 15px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
@@ -35,7 +38,8 @@
         h2 {
             text-align: center;
             margin-bottom: 20px;
-            color: #6f42c1; /* Purple text inspired by the image */
+            color: #6f42c1;
+            /* Purple text inspired by the image */
         }
 
         table {
@@ -51,7 +55,8 @@
         }
 
         table th {
-            background: linear-gradient(to right, #e5eaf5, #d3d9ec); /* Soft gradient */
+            background: linear-gradient(to right, #e5eaf5, #d3d9ec);
+            /* Soft gradient */
             color: #555;
         }
 
@@ -61,7 +66,8 @@
             margin: 5px 5px 20px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            background: rgba(240, 240, 255, 0.8); /* Light lavender tone */
+            background: rgba(240, 240, 255, 0.8);
+            /* Light lavender tone */
             color: #333;
         }
 
@@ -69,7 +75,8 @@
             display: block;
             width: 100%;
             padding: 10px;
-            background: linear-gradient(to right, #6a5acd, #7a67ee); /* Gradient button with deep purples */
+            background: linear-gradient(to right, #6a5acd, #7a67ee); 
+            /* Gradient button with deep purples */
             color: white;
             border: none;
             border-radius: 5px;
@@ -81,7 +88,8 @@
         }
 
         .add-btn:hover {
-            background: #5a4fcf; /* Slightly darker purple on hover */
+            background: #5a4fcf;
+            /* Slightly darker purple on hover */
         }
 
         .charts {
@@ -91,7 +99,8 @@
         canvas {
             margin: 20px auto;
             display: block;
-            background: rgba(245, 245, 255, 0.9); /* Subtle background to match theme */
+            background: rgba(245, 245, 255, 0.9); 
+            /* Subtle background to match theme */
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
@@ -116,37 +125,29 @@
             color: #483d8b; /* Darker purple */
         }
 
-        /* Adding more styles to improve layout */
-        .info-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .summary-box {
-            background: #f8f8f8;
-            padding: 15px;
+        .summary-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 48%;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .summary-box h3 {
-            margin: 0;
-            font-size: 1.5em;
+        .summary-container h3 {
+            text-align: center;
+            color: #4c3f91;
         }
 
-        .summary-box p {
+        .summary-item {
+            margin-bottom: 10px;
             font-size: 1.2em;
-            margin: 5px 0;
         }
 
-        .error-message {
-            color: red;
+        .summary-item span {
             font-weight: bold;
-            margin-top: 10px;
+            color: #6f42c1;
         }
+
     </style>
 </head>
 <body>
@@ -184,22 +185,6 @@
         <input type="number" id="expense-amount" placeholder="Amount">
         <button class="add-btn" onclick="addExpense()">Add Expense</button>
 
-        <!-- Adding new container for displaying financial summary -->
-        <div class="info-container">
-            <div class="summary-box">
-                <h3>Total Income</h3>
-                <p id="total-income">0.00</p>
-            </div>
-            <div class="summary-box">
-                <h3>Total Expenses</h3>
-                <p id="total-expenses">0.00</p>
-            </div>
-            <div class="summary-box">
-                <h3>Net Savings</h3>
-                <p id="net-savings">0.00</p>
-            </div>
-        </div>
-
         <div class="charts">
             <h2>Graphical Analysis</h2>
             <div class="options-container">
@@ -220,6 +205,21 @@
             <h2>Savings Trend</h2>
             <canvas id="savingsCanvas" width="400" height="400"></canvas>
         </div>
+
+        <!-- Summary Section -->
+        <div class="summary-container">
+            <h3>Summary</h3>
+            <div class="summary-item">
+                <span>Total Income: </span><span id="total-income">0.00</span>
+            </div>
+            <div class="summary-item">
+                <span>Total Expenses: </span><span id="total-expenses">0.00</span>
+            </div>
+            <div class="summary-item">
+                <span>Net Savings: </span><span id="net-savings">0.00</span>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -227,6 +227,7 @@
         let expenses = [];
         let chart, savingsChart;
 
+        // Function to add income entries
         function addIncome() {
             const item = document.getElementById('income-item').value;
             const amount = parseFloat(document.getElementById('income-amount').value);
@@ -236,14 +237,15 @@
                 updateTable('income-table', incomes, true);
                 updateCharts();
                 updateSavingsChart();
-                updateFinancialSummary();
+                updateSummary();
                 document.getElementById('income-item').value = '';
                 document.getElementById('income-amount').value = '';
             } else {
-                showError("Please enter a valid income item and amount.");
+                alert("Please provide valid income item and amount.");
             }
         }
 
+        // Function to add expense entries
         function addExpense() {
             const item = document.getElementById('expense-item').value;
             const amount = parseFloat(document.getElementById('expense-amount').value);
@@ -253,14 +255,15 @@
                 updateTable('expense-table', expenses, false);
                 updateCharts();
                 updateSavingsChart();
-                updateFinancialSummary();
+                updateSummary();
                 document.getElementById('expense-item').value = '';
                 document.getElementById('expense-amount').value = '';
             } else {
-                showError("Please enter a valid expense item and amount.");
+                alert("Please provide valid expense item and amount.");
             }
         }
 
+        // Update table with data
         function updateTable(tableId, data, isIncome) {
             const tableBody = document.querySelector(`#${tableId} tbody`);
             tableBody.innerHTML = '';
@@ -274,6 +277,7 @@
             });
         }
 
+        // Delete entry (Income or Expense)
         function deleteEntry(index, isIncome) {
             if (isIncome) {
                 incomes.splice(index, 1);
@@ -283,9 +287,10 @@
             updateTable(isIncome ? 'income-table' : 'expense-table', isIncome ? incomes : expenses, isIncome);
             updateCharts();
             updateSavingsChart();
-            updateFinancialSummary();
+            updateSummary();
         }
 
+        // Update charts based on selected options
         function updateCharts() {
             const graphType = document.getElementById('graph-type').value;
             const dataType = document.getElementById('data-type').value;
@@ -323,6 +328,7 @@
             });
         }
 
+        // Update savings chart
         function updateSavingsChart() {
             const labels = incomes.map((_, index) => `Month ${index + 1}`);
             const incomeTotal = incomes.map((_, i) => incomes.slice(0, i + 1).reduce((sum, income) => sum + income.amount, 0));
@@ -353,7 +359,8 @@
             });
         }
 
-        function updateFinancialSummary() {
+        // Update summary (Total Income, Expenses, and Net Savings)
+        function updateSummary() {
             const totalIncome = incomes.reduce((sum, income) => sum + income.amount, 0);
             const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
             const netSavings = totalIncome - totalExpenses;
@@ -361,16 +368,6 @@
             document.getElementById('total-income').textContent = totalIncome.toFixed(2);
             document.getElementById('total-expenses').textContent = totalExpenses.toFixed(2);
             document.getElementById('net-savings').textContent = netSavings.toFixed(2);
-        }
-
-        function showError(message) {
-            const errorDiv = document.querySelector('.error-message');
-            if (!errorDiv) {
-                const errorMessageDiv = document.createElement('div');
-                errorMessageDiv.classList.add('error-message');
-                errorMessageDiv.textContent = message;
-                document.body.appendChild(errorMessageDiv);
-            }
         }
     </script>
 </body>
