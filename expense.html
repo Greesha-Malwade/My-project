@@ -10,15 +10,13 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #b3cde0, #d3c6e7, #a3d5d3); 
-            /* Smooth gradient inspired by the uploaded image */
+            background: linear-gradient(to bottom, #b3cde0, #d3c6e7, #a3d5d3); /* Smooth gradient inspired by the uploaded image */
         }
 
         header {
             text-align: center;
             padding: 20px;
-            background: linear-gradient(to right, #afc7f2, #d0a1f4);
-            /* Gradient with purple and blue tones */
+            background: linear-gradient(to right, #afc7f2, #d0a1f4); /* Gradient with purple and blue tones */
             color: white;
             font-size: 2em;
             font-weight: bold;
@@ -29,8 +27,7 @@
             max-width: 900px;
             margin: 20px auto;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            /* Slightly transparent white */
+            background: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
             border-radius: 15px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
@@ -38,8 +35,7 @@
         h2 {
             text-align: center;
             margin-bottom: 20px;
-            color: #6f42c1;
-            /* Purple text inspired by the image */
+            color: #6f42c1; /* Purple text inspired by the image */
         }
 
         table {
@@ -55,8 +51,7 @@
         }
 
         table th {
-            background: linear-gradient(to right, #e5eaf5, #d3d9ec);
-            /* Soft gradient */
+            background: linear-gradient(to right, #e5eaf5, #d3d9ec); /* Soft gradient */
             color: #555;
         }
 
@@ -66,8 +61,7 @@
             margin: 5px 5px 20px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            background: rgba(240, 240, 255, 0.8);
-            /* Light lavender tone */
+            background: rgba(240, 240, 255, 0.8); /* Light lavender tone */
             color: #333;
         }
 
@@ -75,8 +69,7 @@
             display: block;
             width: 100%;
             padding: 10px;
-            background: linear-gradient(to right, #6a5acd, #7a67ee); 
-            /* Gradient button with deep purples */
+            background: linear-gradient(to right, #6a5acd, #7a67ee); /* Gradient button with deep purples */
             color: white;
             border: none;
             border-radius: 5px;
@@ -88,8 +81,7 @@
         }
 
         .add-btn:hover {
-            background: #5a4fcf;
-            /* Slightly darker purple on hover */
+            background: #5a4fcf; /* Slightly darker purple on hover */
         }
 
         .charts {
@@ -99,8 +91,7 @@
         canvas {
             margin: 20px auto;
             display: block;
-            background: rgba(245, 245, 255, 0.9); 
-            /* Subtle background to match theme */
+            background: rgba(245, 245, 255, 0.9); /* Subtle background to match theme */
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
@@ -232,14 +223,13 @@
             const item = document.getElementById('income-item').value;
             const amount = parseFloat(document.getElementById('income-amount').value);
 
-            if (item && amount) {
-                incomes.push({ item, amount });
+            if (item && amount && validateAmount(amount)) {
+                incomes.push({ item, amount, date: new Date() });
                 updateTable('income-table', incomes, true);
                 updateCharts();
                 updateSavingsChart();
                 updateSummary();
-                document.getElementById('income-item').value = '';
-                document.getElementById('income-amount').value = '';
+                resetForm('income');
             } else {
                 alert("Please provide valid income item and amount.");
             }
@@ -250,20 +240,35 @@
             const item = document.getElementById('expense-item').value;
             const amount = parseFloat(document.getElementById('expense-amount').value);
 
-            if (item && amount) {
-                expenses.push({ item, amount });
+            if (item && amount && validateAmount(amount)) {
+                expenses.push({ item, amount, date: new Date() });
                 updateTable('expense-table', expenses, false);
                 updateCharts();
                 updateSavingsChart();
                 updateSummary();
-                document.getElementById('expense-item').value = '';
-                document.getElementById('expense-amount').value = '';
+                resetForm('expense');
             } else {
                 alert("Please provide valid expense item and amount.");
             }
         }
 
-        // Update table with data
+        // Helper function to validate amounts (cannot be negative)
+        function validateAmount(amount) {
+            return amount > 0;
+        }
+
+        // Function to reset the form after adding an entry
+        function resetForm(type) {
+            if (type === 'income') {
+                document.getElementById('income-item').value = '';
+                document.getElementById('income-amount').value = '';
+            } else {
+                document.getElementById('expense-item').value = '';
+                document.getElementById('expense-amount').value = '';
+            }
+        }
+
+        // Update table with data (Income or Expenses)
         function updateTable(tableId, data, isIncome) {
             const tableBody = document.querySelector(`#${tableId} tbody`);
             tableBody.innerHTML = '';
