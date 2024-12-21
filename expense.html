@@ -1,116 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"> <!-- Set character encoding to UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures the page is responsive on different devices -->
-    <title>Expense Tracker with Savings Trend</title> <!-- Page title displayed on the browser tab -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library for graph generation -->
+    <meta charset="UTF-8">
+    <!-- Set character encoding to UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ensures the page is responsive on different devices -->
+    <title>Expense Tracker with Savings Trend</title> 
+    <!-- Page title displayed on the browser tab -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+    <!-- Include Chart.js library for graph generation -->
     <style>
         /* Basic styling for the body and page layout */
         body {
-            font-family: 'Arial', sans-serif; /* Set font */
-            margin: 0; /* Remove default margin */
-            padding: 0; /* Remove default padding */
-            background: linear-gradient(to bottom, #b3cde0, #d3c6e7, #a3d5d3); /* Set background gradient */
+            font-family: 'Arial', sans-serif;
+            /* Set font */
+            margin: 0; 
+            /* Remove default margin */
+            padding: 0;
+            /* Remove default padding */
+            background: linear-gradient(to bottom, #b3cde0, #d3c6e7, #a3d5d3); 
+            /* Set background gradient */
         }
 
         /* Header styling */
         header {
-            text-align: center; /* Center-align text */
-            padding: 20px; /* Add padding */
-            background: linear-gradient(to right, #afc7f2, #d0a1f4); /* Set gradient background */
-            color: white; /* Set text color to white */
-            font-size: 2em; /* Increase font size */
-            font-weight: bold; /* Make the text bold */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+            text-align: center;
+            /* Center-align text */
+            padding: 20px; 
+            /* Add padding */
+            background: linear-gradient(to right, #afc7f2, #d0a1f4); 
+            /* Set gradient background */
+            color: white;
+            /* Set text color to white */
+            font-size: 2em;
+            /* Increase font size */
+            font-weight: bold; 
+            /* Make the text bold */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+            /* Add a subtle shadow */
         }
 
         /* Container for the main content */
         .container {
-            max-width: 900px; /* Set maximum width */
-            margin: 20px auto; /* Center-align container with top margin */
-            padding: 20px; /* Add padding inside the container */
-            background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
-            border-radius: 15px; /* Rounded corners */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Box shadow effect */
+            max-width: 900px;
+            /* Set maximum width */
+            margin: 20px auto;
+            /* Center-align container with top margin */
+            padding: 20px;
+            /* Add padding inside the container */
+            background: rgba(255, 255, 255, 0.9); 
+            /* Semi-transparent white background */
+            border-radius: 15px;
+            /* Rounded corners */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            /* Box shadow effect */
         }
 
         /* Styling for h2 elements */
         h2 {
-            text-align: center; /* Center-align the header text */
-            margin-bottom: 20px; /* Add bottom margin */
-            color: #6f42c1; /* Set text color */
+            text-align: center; 
+            
+            /* Center-align the header text */
+            margin-bottom: 20px;
+            /* Add bottom margin */
+            color: #6f42c1;
+            /* Set text color */
         }
 
         /* Styling for the table */
         table {
-            width: 100%; /* Make the table full-width */
-            border-collapse: collapse; /* Collapse table borders */
-            margin-bottom: 20px; /* Add bottom margin */
+            width: 100%;
+            /* Make the table full-width */
+            border-collapse: collapse;
+            /* Collapse table borders */
+            margin-bottom: 20px;
+            /* Add bottom margin */
         }
 
         /* Table header styling */
         table th, table td {
-            padding: 10px; /* Add padding to cells */
-            text-align: left; /* Align text to the left */
-            border: 1px solid #ddd; /* Add a border to cells */
+            padding: 10px;
+            /* Add padding to cells */
+            text-align: left;
+            /* Align text to the left */
+            border: 1px solid #ddd; 
+            /* Add a border to cells */
         }
 
         /* Table header specific styling */
         table th {
-            background: linear-gradient(to right, #e5eaf5, #d3d9ec); /* Gradient background */
-            color: #555; /* Set text color */
+            background: linear-gradient(to right, #e5eaf5, #d3d9ec); 
+            /* Gradient background */
+            color: #555;
+            /* Set text color */
         }
 
         /* Styling for input fields and select elements */
         input, select {
-            width: calc(50% - 10px); /* Set width to 50% minus some space */
-            padding: 10px; /* Add padding */
-            margin: 5px 5px 20px; /* Set margin around inputs */
-            border: 1px solid #ccc; /* Set border */
-            border-radius: 4px; /* Round corners */
-            background: rgba(240, 240, 255, 0.8); /* Semi-transparent background */
-            color: #333; /* Text color */
+            width: calc(50% - 10px);
+            /* Set width to 50% minus some space */
+            padding: 10px; 
+            /* Add padding */
+            margin: 5px 5px 20px; 
+            /* Set margin around inputs */
+            border: 1px solid #ccc; 
+            /* Set border */
+            border-radius: 4px; 
+            /* Round corners */
+            background: rgba(240, 240, 255, 0.8); 
+            /* Semi-transparent background */
+            color: #333; 
+            /* Text color */
         }
 
         /* Button styling */
         .add-btn {
-            display: block; /* Make button block-level */
-            width: 100%; /* Set button to full width */
-            padding: 10px; /* Add padding */
-            background: linear-gradient(to right, #6a5acd, #7a67ee); /* Gradient background */
-            color: white; /* White text */
-            border: none; /* Remove border */
-            border-radius: 5px; /* Rounded corners */
-            cursor: pointer; /* Change cursor on hover */
-            margin-top: 10px; /* Add top margin */
-            font-size: 1.1em; /* Increase font size */
-            font-weight: bold; /* Make text bold */
-            transition: background 0.3s ease; /* Smooth background color transition */
+            display: block;
+            /* Make button block-level */
+            width: 100%; 
+            /* Set button to full width */
+            padding: 10px;
+            /* Add padding */
+            background: linear-gradient(to right, #6a5acd, #7a67ee);
+            /* Gradient background */
+            color: white;
+            /* White text */
+            border: none;
+            /* Remove border */
+            border-radius: 5px; 
+            /* Rounded corners */
+            cursor: pointer; 
+            /* Change cursor on hover */
+            margin-top: 10px; 
+            /* Add top margin */
+            font-size: 1.1em;
+            /* Increase font size */
+            font-weight: bold;
+            /* Make text bold */
+            transition: background 0.3s ease;
+            /* Smooth background color transition */
         }
 
         /* Hover effect for buttons */
         .add-btn:hover {
-            background: #5a4fcf; /* Change background on hover */
+            background: #5a4fcf;
+            /* Change background on hover */
         }
 
         /* Chart container styling */
         .charts {
-            margin-top: 40px; /* Add top margin */
+            margin-top: 40px;
+            /* Add top margin */
         }
 
         /* Styling for canvas elements */
         canvas {
-            margin: 20px auto; /* Center-align canvas with margin */
-            display: block; /* Ensure canvas is block-level */
-            background: rgba(245, 245, 255, 0.9); /* Light background */
-            border-radius: 10px; /* Rounded corners */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            margin: 20px auto;
+            /* Center-align canvas with margin */
+            display: block; 
+            /* Ensure canvas is block-level */
+            background: rgba(245, 245, 255, 0.9); 
+            /* Light background */
+            border-radius: 10px; 
+            /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* Shadow effect */
         }
 
         /* Styling for options container (dropdowns) */
         .options-container {
-            display: flex; /* Use flexbox for alignment */
+            display: flex;
+            /* Use flexbox for alignment */
             justify-content: center; /* Center-align the options */
             gap: 20px; /* Space out options */
             margin-bottom: 20px; /* Add bottom margin */
@@ -360,6 +420,45 @@
         }
 
         // Function to update the savings chart
+function updateCharts() {
+            const graphType = document.getElementById('graph-type').value; // Get the selected graph type
+            const dataType = document.getElementById('data-type').value; // Get the selected data type
+
+            let labels, data, label;
+
+            // Determine the labels and data based on selected type
+            if (dataType === 'income') {
+                labels = incomes.map(i => i.item); // Get income items as labels
+                data = incomes.map(i => i.amount); // Get income amounts as data
+                label = 'Income Distribution'; // Label for the graph
+            } else {
+                labels = expenses.map(e => e.item); // Get expense items as labels
+                data = expenses.map(e => e.amount); // Get expense amounts as data
+                label = 'Expenses Distribution'; // Label for the graph
+            }
+
+            const ctx = document.getElementById('chartCanvas').getContext('2d'); // Get the canvas context
+            if (chart) chart.destroy(); // Destroy the previous chart if it exists
+
+            chart = new Chart(ctx, { // Create a new chart
+                type: graphType, // Set chart type (pie, bar, or line)
+                data: {
+                    labels: labels, // Set labels for the chart
+                    datasets: [{
+                        label: label, // Set the dataset label
+                        data: data, // Set the data for the chart
+                        backgroundColor: ['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1'], // Set colors for each section
+                        borderColor: '#f4f4f4', // Set border color
+                        borderWidth: 1 // Set border width
+                    }]
+                },
+                options: {
+                    responsive: true, // Make the chart responsive
+                },
+            });
+        }
+
+        // Function to update the savings chart
         function updateSavingsChart() {
             const labels = incomes.map((_, index) => `Month ${index + 1}`); // Labels for the savings chart (Month 1, Month 2, etc.)
             const incomeTotal = incomes.map((_, i) => incomes.slice(0, i + 1).reduce((sum, income) => sum + income.amount, 0)); // Cumulative income
@@ -373,4 +472,42 @@
             savingsChart = new Chart(ctx, { // Create a new savings chart
                 type: 'line', // Set chart type to line
                 data: {
-                    labels: labels, // Set
+                    labels: labels, // Set labels for the chart (Months)
+                    datasets: [{
+                        label: 'Savings Trend', // Label for the dataset
+                        data: savings, // Set savings data
+                        borderColor: '#6f42c1', // Set border color
+                        backgroundColor: 'rgba(111, 66, 193, 0.2)', // Set background color
+                        borderWidth: 2, // Set border width
+                        fill: true // Fill the area under the line
+                    }]
+                },
+                options: {
+                    responsive: true, // Make the chart responsive
+                    scales: {
+                        y: {
+                            beginAtZero: true, // Start the Y axis at zero
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function to update the summary section
+        function updateSummary() {
+            const totalIncome = incomes.reduce((sum, i) => sum + i.amount, 0); // Calculate total income
+            const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0); // Calculate total expenses
+            const netSavings = totalIncome - totalExpenses; // Calculate net savings
+
+            document.getElementById('total-income').textContent = totalIncome.toFixed(2); // Update total income in summary
+            document.getElementById('total-expenses').textContent = totalExpenses.toFixed(2); // Update total expenses in summary
+            document.getElementById('net-savings').textContent = netSavings.toFixed(2); // Update net savings in summary
+        }
+
+        // Initialize the charts when the page loads
+        updateCharts();
+        updateSavingsChart();
+        updateSummary();
+    </script>
+</body>
+</html>
